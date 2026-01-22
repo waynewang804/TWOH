@@ -1,16 +1,19 @@
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Shield, Menu, X } from "lucide-react";
-
-const navItems = [
-  { label: "法規要求", href: "#requirements" },
-  { label: "風險評估", href: "#risk-assessment" },
-  { label: "合規試算", href: "#calculator" },
-  { label: "廠商資訊", href: "#vendors" },
-];
+import LanguageSelector from "./LanguageSelector";
+import { useTranslation } from "@/hooks/useTranslation";
 
 const Navigation = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const { t } = useTranslation();
+
+  const navItems = [
+    { label: t("nav.requirements"), href: "#requirements" },
+    { label: t("nav.riskAssessment"), href: "#risk-assessment" },
+    { label: t("nav.calculator"), href: "#calculator" },
+    { label: t("nav.vendors"), href: "#vendors" },
+  ];
 
   const scrollToSection = (href: string) => {
     const element = document.querySelector(href);
@@ -27,7 +30,7 @@ const Navigation = () => {
           {/* Logo */}
           <a href="#" className="flex items-center gap-2">
             <Shield className="w-7 h-7 text-accent" />
-            <span className="font-bold text-lg">台灣職場健康</span>
+            <span className="font-bold text-lg">{t("nav.title")}</span>
           </a>
 
           {/* Desktop Nav */}
@@ -47,19 +50,22 @@ const Navigation = () => {
               className="ml-2"
               onClick={() => scrollToSection('#calculator')}
             >
-              立即試算
+              {t("nav.startCalculation")}
             </Button>
+            <LanguageSelector />
           </div>
 
-          {/* Mobile Menu Button */}
-          <Button
-            variant="ghost"
-            size="icon"
-            className="md:hidden"
-            onClick={() => setIsMenuOpen(!isMenuOpen)}
-          >
-            {isMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
-          </Button>
+          {/* Mobile Nav */}
+          <div className="flex items-center gap-2 md:hidden">
+            <LanguageSelector />
+            <Button
+              variant="ghost"
+              size="icon"
+              onClick={() => setIsMenuOpen(!isMenuOpen)}
+            >
+              {isMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
+            </Button>
+          </div>
         </div>
 
         {/* Mobile Menu */}
@@ -81,7 +87,7 @@ const Navigation = () => {
                 className="mt-2"
                 onClick={() => scrollToSection('#calculator')}
               >
-                立即試算
+                {t("nav.startCalculation")}
               </Button>
             </div>
           </div>

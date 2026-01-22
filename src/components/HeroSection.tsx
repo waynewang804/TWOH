@@ -1,7 +1,10 @@
 import { Button } from "@/components/ui/button";
-import { Shield, FileCheck, Users } from "lucide-react";
+import { Shield, FileCheck, Users, TrendingUp, Award, CheckCircle, BarChart3, Target, Zap } from "lucide-react";
+import { useTranslation } from "@/hooks/useTranslation";
 
 const HeroSection = () => {
+  const { t } = useTranslation();
+  
   const scrollToCalculator = () => {
     document.getElementById('calculator')?.scrollIntoView({ behavior: 'smooth' });
   };
@@ -11,59 +14,88 @@ const HeroSection = () => {
   };
 
   return (
-    <section className="hero-gradient min-h-[90vh] flex items-center relative overflow-hidden">
-      {/* Background Pattern */}
-      <div className="absolute inset-0 opacity-10">
-        <div className="absolute top-20 left-10 w-72 h-72 bg-teal-400 rounded-full blur-3xl" />
-        <div className="absolute bottom-20 right-10 w-96 h-96 bg-teal-500 rounded-full blur-3xl" />
-      </div>
+    <section className="hero-section min-h-[90vh] flex items-center relative overflow-hidden">
+      {/* Subtle Background Pattern */}
+      <div className="absolute inset-0 opacity-5 business-grid-pattern"></div>
 
       <div className="section-container relative z-10 py-20">
         <div className="max-w-4xl mx-auto text-center">
-          <div className="inline-flex items-center gap-2 bg-teal-500/20 backdrop-blur-sm border border-teal-400/30 rounded-full px-4 py-2 mb-8 animate-fade-in">
-            <Shield className="w-4 h-4 text-teal-400" />
-            <span className="text-teal-100 text-sm font-medium">職業安全衛生法 合規指南</span>
+          <div className="business-badge mb-8 animate-bounce-in bg-amazon-orange text-white border-0">
+            <Shield className="w-5 h-5 mr-2" />
+            <span className="font-semibold">{t("hero.badge")}</span>
           </div>
 
-          <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-primary-foreground mb-6 animate-slide-up" style={{ animationDelay: '0.1s' }}>
-            台灣職場健康管理
+          <h1 className="text-business-xl font-bold text-white mb-8 animate-slide-up hero-title" style={{ animationDelay: '0.1s' }}>
+            {t("hero.title")}
             <br />
-            <span className="text-teal-400">企業合規一站式服務</span>
+            <span className="text-amazon-orange hero-subtitle">{t("hero.subtitle")}</span>
           </h1>
 
-          <p className="text-lg md:text-xl text-navy-200 mb-10 max-w-2xl mx-auto animate-slide-up" style={{ animationDelay: '0.2s' }}>
-            根據《職業安全衛生法》與《勞工健康保護規則》，協助中小企業與外商快速了解法規要求，計算合規成本，找到合格服務商。
+          <p className="text-business-md text-gray-300 mb-12 max-w-3xl mx-auto animate-slide-up" style={{ animationDelay: '0.2s' }}>
+            {t("hero.description")}
           </p>
 
-          <div className="flex flex-col sm:flex-row gap-4 justify-center animate-slide-up" style={{ animationDelay: '0.3s' }}>
-            <Button variant="hero" size="xl" onClick={scrollToCalculator}>
-              <FileCheck className="w-5 h-5" />
-              立即試算合規需求
-            </Button>
-            <Button 
-              variant="hero-outline" 
-              size="xl" 
-              onClick={scrollToRequirements}
-              className="text-teal-100 border-teal-400/40 hover:bg-teal-400/10"
+          <div className="flex flex-col sm:flex-row gap-6 justify-center animate-slide-up" style={{ animationDelay: '0.3s' }}>
+            <button 
+              onClick={scrollToCalculator} 
+              className="business-button-primary-large"
             >
-              <Users className="w-5 h-5" />
-              查看法規要求
-            </Button>
+              <FileCheck className="w-5 h-5 mr-3" />
+              {t("hero.startButton")}
+            </button>
+            <button 
+              onClick={scrollToRequirements}
+              className="business-button-secondary-large"
+            >
+              <Users className="w-5 h-5 mr-3" />
+              {t("hero.requirementsButton")}
+            </button>
           </div>
 
-          {/* Stats */}
-          <div className="grid grid-cols-3 gap-8 mt-16 pt-10 border-t border-teal-400/20 animate-fade-in" style={{ animationDelay: '0.5s' }}>
-            <div>
-              <div className="text-3xl md:text-4xl font-bold text-teal-400">300+</div>
-              <div className="text-navy-200 text-sm mt-1">員工需設置護理人員</div>
+          {/* Clean Stats Cards */}
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-16 pt-8 border-t border-gray-600 animate-fade-in" style={{ animationDelay: '0.5s' }}>
+            <div className="business-card bg-white p-6">
+              <div className="flex items-center justify-between mb-4">
+                <div className="business-number bg-amazon-orange">
+                  300+
+                </div>
+                <Target className="w-6 h-6 text-amazon-orange" />
+              </div>
+              <div className="text-business-dark-text font-medium">{t("hero.stats.nurses")}</div>
+              <div className="business-progress-bar mt-3">
+                <div className="business-progress-fill" style={{ width: '85%' }}></div>
+              </div>
             </div>
-            <div>
-              <div className="text-3xl md:text-4xl font-bold text-teal-400">50+</div>
-              <div className="text-navy-200 text-sm mt-1">員工需臨場健康服務</div>
+            
+            <div className="business-card bg-white p-6">
+              <div className="flex items-center justify-between mb-4">
+                <div className="business-number bg-amazon-navy">
+                  50+
+                </div>
+                <Zap className="w-6 h-6 text-amazon-navy" />
+              </div>
+              <div className="text-business-dark-text font-medium">{t("hero.stats.healthService")}</div>
+              <div className="business-progress-bar mt-3">
+                <div className="business-progress-fill bg-amazon-navy" style={{ width: '70%' }}></div>
+              </div>
             </div>
-            <div>
-              <div className="text-3xl md:text-4xl font-bold text-teal-400">免費</div>
-              <div className="text-navy-200 text-sm mt-1">特殊危害勞保補助</div>
+            
+            <div className="business-card bg-white p-6">
+              <div className="flex items-center justify-between mb-4">
+                <div className="business-number bg-amazon-orange">
+                  <CheckCircle className="w-6 h-6" />
+                </div>
+                <Award className="w-6 h-6 text-amazon-orange" />
+              </div>
+              <div className="text-business-dark-text font-medium">
+                {t("hero.stats.subsidy")
+                  .replace("Free ", "")
+                  .replace("무료 ", "")
+                  .replace("免費", "")}
+              </div>
+              <div className="business-progress-bar mt-3">
+                <div className="business-progress-fill" style={{ width: '100%' }}></div>
+              </div>
             </div>
           </div>
         </div>

@@ -1,6 +1,7 @@
 import Navigation from "@/components/Navigation";
 import HeroSection from "@/components/HeroSection";
 import RequirementsSection from "@/components/RequirementsSection";
+import BusinessClassification from "@/components/BusinessClassification";
 import RiskAssessment from "@/components/RiskAssessment";
 import ComplianceCalculator from "@/components/ComplianceCalculator";
 import VendorSection from "@/components/VendorSection";
@@ -12,6 +13,7 @@ const Index = () => {
       <Navigation />
       <HeroSection />
       <RequirementsSection />
+      <BusinessClassification />
       <RiskAssessment />
       <ComplianceCalculator />
       <VendorSection />

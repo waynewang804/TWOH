@@ -1,136 +1,306 @@
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { Users, Stethoscope, HeartPulse, Building2 } from "lucide-react";
 
-const requirementsData = [
-  {
-    employees: "50-299人",
-    icon: Building2,
-    color: "teal",
-    requirements: [
-      { title: "臨場健康服務", desc: "醫師+護理人員定期臨場", required: true },
-      { title: "健康管理", desc: "員工健康檢查與追蹤", required: true },
-      { title: "專職護理師", desc: "不需專職設置", required: false },
-    ],
-    frequency: "依事業規模與風險等級",
-  },
-  {
-    employees: "300-499人",
-    icon: Users,
-    color: "secondary",
-    requirements: [
-      { title: "專職護理人員", desc: "至少1名專職", required: true },
-      { title: "臨場健康服務", desc: "醫師定期臨場", required: true },
-      { title: "健康管理計畫", desc: "完整書面計畫", required: true },
-    ],
-    frequency: "每月至少1次醫師臨場",
-  },
-  {
-    employees: "500-999人",
-    icon: Stethoscope,
-    color: "accent",
-    requirements: [
-      { title: "專職護理人員", desc: "至少2名專職", required: true },
-      { title: "臨場健康服務", desc: "增加醫師臨場頻率", required: true },
-      { title: "健康風險評估", desc: "系統化風險管理", required: true },
-    ],
-    frequency: "每月至少2次醫師臨場",
-  },
-  {
-    employees: "1000人以上",
-    icon: HeartPulse,
-    color: "primary",
-    requirements: [
-      { title: "專任醫師", desc: "3000人以上需專任", required: true },
-      { title: "專職護理人員", desc: "依比例設置", required: true },
-      { title: "完整健康服務", desc: "全方位健康管理", required: true },
-    ],
-    frequency: "每週多次醫師服務",
-  },
-];
+import { Users, Stethoscope, HeartPulse, Building2, Shield, AlertTriangle, CheckCircle2, TrendingUp, FileText, BarChart3, Target, UserCheck } from "lucide-react";
+import { useTranslation } from "@/hooks/useTranslation";
+import AnimatedCounter from "@/components/AnimatedCounter";
+import AnimatedProgressBar from "@/components/AnimatedProgressBar";
+import { useRef, useCallback } from "react";
 
 const RequirementsSection = () => {
+  const { t } = useTranslation();
+  
+  // Refs for animated components to trigger animations globally
+  const counterRefs = useRef<Array<{ resetAnimation: () => void; startAnimation: () => void } | null>>([]);
+  const progressBarRefs = useRef<Array<{ resetAnimation: () => void; startAnimation: () => void } | null>>([]);
+
+  // Global animation trigger function
+  const triggerAllAnimations = useCallback(() => {
+    // Reset all animations first
+    counterRefs.current.forEach(ref => {
+      if (ref) ref.resetAnimation();
+    });
+    progressBarRefs.current.forEach(ref => {
+      if (ref) ref.resetAnimation();
+    });
+
+    // Start all animations after a small delay
+    setTimeout(() => {
+      counterRefs.current.forEach(ref => {
+        if (ref) ref.startAnimation();
+      });
+      progressBarRefs.current.forEach(ref => {
+        if (ref) ref.startAnimation();
+      });
+    }, 50);
+  }, []);
+
+  // Requirements data redesigned according to correct regulations
+  const requirementsData = [
+    {
+      categoryKey: "small",
+      icon: Building2,
+      requirements: ["contractDoctor", "contractNurse", "noFullTime"],
+      progress: 60
+    },
+    {
+      categoryKey: "medium",
+      icon: Users,
+      requirements: ["employNurse", "employOrContractDoctor", "healthService"],
+      progress: 85
+    },
+    {
+      categoryKey: "specialHazard",
+      icon: AlertTriangle,
+      requirements: ["specialEmployNurse", "specialDoctor", "specialExam"],
+      progress: 90
+    },
+    {
+      categoryKey: "consultant",
+      icon: HeartPulse,
+      requirements: ["secondThirdClass", "approvedConsultant", "qualifiedPersonnel"],
+      progress: 75
+    },
+  ];
+
+  const responsibilities = [
+    {
+      key: "healthExam",
+      icon: Stethoscope,
+      progress: 90
+    },
+    {
+      key: "healthMgmt", 
+      icon: TrendingUp,
+      progress: 85
+    },
+    {
+      key: "healthPromotion",
+      icon: Shield,
+      progress: 75
+    }
+  ];
+
   return (
-    <section id="requirements" className="py-20 bg-background">
-      <div className="section-container">
-        <div className="text-center mb-12">
-          <Badge variant="outline" className="mb-4 border-accent text-accent">
-            勞工健康保護規則
-          </Badge>
-          <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4">
-            依員工人數的法規要求
+    <section id="requirements" className="business-section-alt">
+      <div className="section-container relative z-10">
+        <div className="text-center mb-16">
+          <div className="business-badge mb-6 animate-bounce-in">
+            <FileText className="w-5 h-5 text-amazon-orange" />
+            <span className="text-amazon-blue font-semibold">{t("requirements.badge")}</span>
+          </div>
+          <h2 className="business-title mb-6 animate-slide-up">
+            {t("requirements.title")}
           </h2>
-          <p className="text-muted-foreground max-w-2xl mx-auto">
-            根據《勞工健康保護規則》第3條至第6條，不同規模事業單位需配置相應的職業健康人員
+          <p className="business-subtitle text-gray-600 max-w-4xl mx-auto animate-slide-up" style={{ animationDelay: '0.1s' }}>
+            {t("requirements.description")}
           </p>
+          
+          {/* Summary Stats */}
+          <div className="flex justify-center gap-8 mt-10 animate-fade-in" style={{ animationDelay: '0.3s' }}>
+            <div className="text-center">
+              <div className="business-metric text-amazon-orange">
+                <AnimatedCounter 
+                  value={4} 
+                  duration={1200}
+                  startDelay={300}
+                  triggerOnHover={true}
+                />
+              </div>
+              <div className="business-metric-label">{t("requirements.medicalPersonnel.stats.configTypes")}</div>
+            </div>
+            <div className="text-center">
+              <div className="business-metric text-amazon-navy">
+                <AnimatedCounter 
+                  value={50} 
+                  duration={1400}
+                  startDelay={500}
+                  triggerOnHover={true}
+                />
+              </div>
+              <div className="business-metric-label">{t("requirements.medicalPersonnel.stats.minThreshold")}</div>
+            </div>
+            <div className="text-center">
+              <div className="business-metric text-amazon-orange">
+                <AnimatedCounter 
+                  value={300} 
+                  duration={1600}
+                  startDelay={700}
+                  triggerOnHover={true}
+                />
+              </div>
+              <div className="business-metric-label">{t("requirements.medicalPersonnel.stats.employmentThreshold")}</div>
+            </div>
+          </div>
         </div>
 
-        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+        {/* Legal Requirements Cards */}
+        <div className="grid md:grid-cols-2 gap-8 mb-16">
           {requirementsData.map((item, index) => (
-            <Card 
-              key={index} 
-              className="card-elevated hover:-translate-y-1 transition-all duration-300"
-              style={{ animationDelay: `${index * 0.1}s` }}
+            <div key={index} className={`business-card bg-white animate-slide-up`}
+              style={{ animationDelay: `${index * 0.15}s` }}
             >
-              <CardHeader className="pb-4">
-                <div className={`w-12 h-12 rounded-xl bg-${item.color}/10 flex items-center justify-center mb-3`}>
-                  <item.icon className={`w-6 h-6 text-${item.color}`} />
+              <div className="flex items-center justify-between p-6 border-b border-gray-200">
+                <div className="flex items-center gap-4">
+                  <div className="business-icon-wrapper bg-amazon-orange">
+                    <item.icon className="w-8 h-8 text-white" />
+                  </div>
+                  <div>
+                    <h3 className="text-lg font-bold text-gray-900">{t(`requirements.medicalPersonnel.categories.${item.categoryKey}.title`)}</h3>
+                    <p className="text-sm text-gray-600">{t(`requirements.medicalPersonnel.categories.${item.categoryKey}.subtitle`)}</p>
+                  </div>
                 </div>
-                <CardTitle className="text-xl">{item.employees}</CardTitle>
-                <p className="text-sm text-muted-foreground">{item.frequency}</p>
-              </CardHeader>
-              <CardContent>
-                <ul className="space-y-3">
-                  {item.requirements.map((req, reqIndex) => (
-                    <li key={reqIndex} className="flex items-start gap-2">
-                      <span className={`mt-1 w-2 h-2 rounded-full ${req.required ? 'bg-success' : 'bg-muted-foreground'}`} />
-                      <div>
-                        <div className="font-medium text-sm">{req.title}</div>
-                        <div className="text-xs text-muted-foreground">{req.desc}</div>
+                <div className="business-number bg-amazon-navy text-sm">
+                  {index + 1}
+                </div>
+              </div>
+              
+              <div className="p-6">
+                <div className="mb-4 p-3 bg-amazon-light-gray rounded-lg">
+                  <div className="flex items-center gap-2 mb-2">
+                    <Target className="w-4 h-4 text-amazon-orange" />
+                    <span className="font-semibold text-gray-900">{t("requirements.medicalPersonnel.common.applicableScope")}</span>
+                  </div>
+                  <p className="text-sm text-gray-700">{t(`requirements.medicalPersonnel.categories.${item.categoryKey}.employeeRange`)}</p>
+                </div>
+                
+                <div className="space-y-3 mb-6">
+                  {item.requirements.map((reqKey, reqIndex) => (
+                    <div key={reqIndex} className="border border-gray-200 rounded-lg p-4 hover:bg-business-hover-gray transition-colors duration-200">
+                      <div className="flex items-start gap-3">
+                        <div className="w-6 h-6 rounded-full flex items-center justify-center mt-0.5 flex-shrink-0 bg-amazon-orange">
+                          <CheckCircle2 className="w-4 h-4 text-white" />
+                        </div>
+                        <div className="flex-1">
+                          <div className="font-semibold text-gray-900 text-sm mb-1">{t(`requirements.medicalPersonnel.requirements.${reqKey}.title`)}</div>
+                          <div className="text-xs text-gray-600 mb-2">{t(`requirements.medicalPersonnel.requirements.${reqKey}.desc`)}</div>
+                          <div className="text-xs text-amazon-orange font-medium">{t(`requirements.medicalPersonnel.requirements.${reqKey}.detail`)}</div>
+                        </div>
                       </div>
-                    </li>
+                    </div>
                   ))}
-                </ul>
-              </CardContent>
-            </Card>
+                </div>
+                
+                <div className="pt-4 border-t border-gray-200">
+                  <div className="text-xs text-gray-500 mb-2">{t("requirements.medicalPersonnel.common.lawBasis")}</div>
+                  <div className="text-sm font-medium text-amazon-navy">{t(`requirements.medicalPersonnel.categories.${item.categoryKey}.lawReference`)}</div>
+                </div>
+              </div>
+            </div>
           ))}
         </div>
 
-        {/* Employer Responsibilities */}
-        <Card className="mt-12 card-elevated border-accent/30">
-          <CardHeader>
-            <CardTitle className="flex items-center gap-2">
-              <Shield className="w-5 h-5 text-accent" />
-              雇主法定責任
-            </CardTitle>
-          </CardHeader>
-          <CardContent>
-            <div className="grid md:grid-cols-3 gap-6">
-              <div className="p-4 rounded-lg bg-muted/50">
-                <h4 className="font-semibold mb-2">健康檢查</h4>
-                <p className="text-sm text-muted-foreground">
-                  新進員工體格檢查、在職員工定期健康檢查、特殊危害作業健康檢查
-                </p>
-              </div>
-              <div className="p-4 rounded-lg bg-muted/50">
-                <h4 className="font-semibold mb-2">健康管理</h4>
-                <p className="text-sm text-muted-foreground">
-                  健檢結果分級管理、異常追蹤、工作適性評估、復工評估
-                </p>
-              </div>
-              <div className="p-4 rounded-lg bg-muted/50">
-                <h4 className="font-semibold mb-2">健康促進</h4>
-                <p className="text-sm text-muted-foreground">
-                  職場健康促進活動、人因工程改善、心理健康支持
-                </p>
+        {/* Key Points Highlight */}
+        <div className="business-highlight-box animate-fade-in mb-16" style={{ animationDelay: '0.5s' }}>
+          <div className="flex items-center gap-6 mb-8">
+            <div className="business-icon-wrapper bg-amazon-navy shadow-lg">
+              <UserCheck className="w-8 h-8 text-white" />
+            </div>
+            <div className="flex-1">
+              <h3 className="text-3xl font-bold text-gray-900 mb-2">
+                {t("requirements.medicalPersonnel.keyPoints.title")}
+              </h3>
+              <div className="flex items-center gap-4">
+                <div className="business-metric text-amazon-navy text-2xl">
+                  <AnimatedCounter 
+                    value={3} 
+                    duration={1000}
+                    startDelay={200}
+                    triggerOnHover={true}
+                  />
+                </div>
+                <div className="business-metric-label">{t("requirements.medicalPersonnel.keyPoints.subtitle")}</div>
               </div>
             </div>
-          </CardContent>
-        </Card>
+          </div>
+          
+          <div className="business-timeline">
+            {["employeeVsSpecial", "employVsContract", "consultantConditions"].map((pointKey, index) => (
+              <div key={pointKey} className="business-timeline-item">
+                <div className="business-timeline-dot bg-amazon-navy"></div>
+                <div className="business-data-point bg-white border-amazon-navy">
+                  <div className="flex items-start gap-4">
+                    <div className="business-number bg-amazon-navy text-sm">{index + 1}</div>
+                    <div className="flex-1">
+                      <h4 className="font-bold text-gray-900 mb-2">{t(`requirements.medicalPersonnel.keyPoints.points.${pointKey}.title`)}</h4>
+                      <p className="business-body text-gray-700 mb-2 whitespace-pre-line">
+                        {t(`requirements.medicalPersonnel.keyPoints.points.${pointKey}.desc`)}
+                      </p>
+                      <div className="text-sm text-amazon-orange font-medium">{t(`requirements.medicalPersonnel.keyPoints.points.${pointKey}.note`)}</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* Employer Responsibilities - Enhanced Business Cards */}
+        <div className="mb-20">
+          <h3 className="business-title text-center mb-16 animate-slide-up">
+            {t("requirements.responsibilities.title")}
+          </h3>
+          <div className="grid md:grid-cols-3 gap-10">
+            {responsibilities.map((resp, index) => (
+              <div 
+                key={resp.key} 
+                className={`business-interactive-card business-card bg-white animate-slide-up hover-sync-container`} 
+                style={{ animationDelay: `${index * 0.2}s` }}
+                onMouseEnter={triggerAllAnimations}
+              >
+                <div className="p-8">
+                  <div className="flex items-center justify-between mb-6">
+                    <div className="business-icon-wrapper bg-amazon-orange shadow-lg">
+                      <resp.icon className="w-8 h-8 text-white" />
+                    </div>
+                    <div className="business-number bg-amazon-navy">
+                      {index + 1}
+                    </div>
+                  </div>
+                  
+                  <h4 className="text-2xl font-bold text-gray-900 mb-4 flex items-center gap-2">
+                    <BarChart3 className="w-6 h-6 text-amazon-orange" />
+                    {t(`requirements.responsibilities.${resp.key}.title`)}
+                  </h4>
+                  
+                  <p className="business-body text-gray-700 mb-6 leading-relaxed whitespace-pre-line">
+                    {t(`requirements.responsibilities.${resp.key}.desc`)}
+                  </p>
+                  
+                  <div className="space-y-3">
+                    <div className="flex items-center justify-between">
+                      <span className="business-metric-label">{t("requirements.medicalPersonnel.common.importanceIndicator")}</span>
+                    </div>
+                    <div>
+                      <div className="flex items-center justify-end mb-2">
+                        <span className="text-2xl font-bold text-gray-700">
+                          <AnimatedCounter 
+                            ref={(el) => { counterRefs.current[index] = el; }}
+                            value={resp.progress} 
+                            suffix="%" 
+                            duration={1200}
+                            startDelay={index * 200}
+                            triggerOnHover={false}
+                            triggerOnView={true}
+                          />
+                        </span>
+                      </div>
+                      <AnimatedProgressBar 
+                        ref={(el) => { progressBarRefs.current[index] = el; }}
+                        progress={resp.progress}
+                        duration={1500}
+                        startDelay={index * 200}
+                        triggerOnHover={false}
+                        triggerOnView={true}
+                      />
+                    </div>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
       </div>
     </section>
   );
 };
 
-import { Shield } from "lucide-react";
 export default RequirementsSection;
