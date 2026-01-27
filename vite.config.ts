@@ -5,7 +5,7 @@ import { componentTagger } from "lovable-tagger";
 
 // https://vitejs.dev/config/
 export default defineConfig(({ mode }) => ({
-  base: mode === "production" && process.env.GITHUB_PAGES ? "/gemini-share-creator/" : "/",
+  base: mode === "production" ? "/gemini-share-creator/" : "/",
   server: {
     host: "::",
     port: 8080,
