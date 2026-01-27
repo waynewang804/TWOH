@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>台灣職場健康管理工具</title>
+    <style>
+        /* SharePoint 優化樣式 */
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background: #f3f2f1;
+            color: #323130;
+        }
+        
+        .sp-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 1.6px 3.6px 0 rgba(0,0,0,0.132), 0 0.3px 0.9px 0 rgba(0,0,0,0.108);
+            overflow: hidden;
+        }
+        
+        .sp-header {
+            background: linear-gradient(135deg, #0078d4 0%, #106ebe 100%);
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+        
+        .sp-header h1 {
+            margin: 0 0 10px 0;
+            font-size: 2.2rem;
+            font-weight: 600;
+        }
+        
+        .sp-header p {
+            margin: 0;
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+        
+        .sp-content {
+            padding: 30px;
+        }
+        
+        .sp-section {
+            margin-bottom: 30px;
+        }
+        
+        .sp-section h2 {
+            color: #0078d4;
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+            border-bottom: 2px solid #0078d4;
+            padding-bottom: 5px;
+        }
+        
+        .sp-calculator {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin-top: 20px;
+        }
+        
+        @media (max-width: 768px) {
+            .sp-calculator {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        .sp-input-section,
+        .sp-results-section {
+            background: #faf9f8;
+            padding: 25px;
+            border-radius: 8px;
+            border: 1px solid #edebe9;
+        }
+        
+        .sp-input-group {
+            margin-bottom: 20px;
+        }
+        
+        .sp-input-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #323130;
+        }
+        
+        .sp-input-group input,
+        .sp-input-group select {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #8a8886;
+            border-radius: 4px;
+            font-size: 14px;
+            font-family: 'Segoe UI', sans-serif;
+            transition: border-color 0.3s;
+        }
+        
+        .sp-input-group input:focus,
+        .sp-input-group select:focus {
+            outline: none;
+            border-color: #0078d4;
+            box-shadow: 0 0 0 1px #0078d4;
+        }
+        
+        .sp-checkbox-group {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 15px;
+            background: white;
+            border: 1px solid #edebe9;
+            border-radius: 4px;
+            margin-bottom: 20px;
+        }
+        
+        .sp-checkbox-group input[type="checkbox"] {
+            width: auto;
+            margin: 0;
+        }
+        
+        .sp-btn {
+            background: #0078d4;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 4px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.3s;
+            font-family: 'Segoe UI', sans-serif;
+        }
+        
+        .sp-btn:hover {
+            background: #106ebe;
+        }
+        
+        .sp-btn:active {
+            background: #005a9e;
+        }
+        
+        .sp-results {
+            background: white;
+            border: 1px solid #edebe9;
+            border-radius: 4px;
+            padding: 20px;
+        }
+        
+        .sp-result-item {
+            margin-bottom: 15px;
+            padding: 15px;
+            background: #f3f2f1;
+            border-radius: 4px;
+            border-left: 4px solid #0078d4;
+        }
+        
+        .sp-result-title {
+            font-weight: 600;
+            color: #323130;
+            margin-bottom: 5px;
+        }
+        
+        .sp-result-desc {
+            color: #605e5c;
+            font-size: 14px;
+        }
+        
+        .sp-cost-estimate {
+            background: linear-gradient(135deg, #0078d4 0%, #106ebe 100%);
+            color: white;
+            padding: 20px;
+            border-radius: 4px;
+            text-align: center;
+            margin-top: 20px;
+        }
+        
+        .sp-cost-amount {
+            font-size: 1.6rem;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+        
+        .sp-disclaimer {
+            font-size: 12px;
+            opacity: 0.9;
+        }
+        
+        .sp-info-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin-top: 30px;
+        }
+        
+        .sp-info-card {
+            background: white;
+            border: 1px solid #edebe9;
+            border-radius: 4px;
+            padding: 20px;
+        }
+        
+        .sp-info-card h3 {
+            color: #0078d4;
+            margin-top: 0;
+            margin-bottom: 10px;
+        }
+        
+        .sp-info-card p {
+            color: #605e5c;
+            font-size: 14px;
+            line-height: 1.5;
+            margin: 0;
+        }
+        
+        .sp-alert {
+            background: #fff4ce;
+            border: 1px solid #ffb900;
+            border-radius: 4px;
+            padding: 15px;
+            margin: 20px 0;
+        }
+        
+        .sp-alert-title {
+            font-weight: 600;
+            color: #8a8886;
+            margin-bottom: 5px;
+        }
+        
+        .sp-alert-content {
+            color: #605e5c;
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+    <div class="sp-container">
+        <div class="sp-header">
+            <h1>台灣職場健康管理工具</h1>
+            <p>Amazon Taiwan 內部工具 - 企業合規需求試算器</p>
+        </div>
+        
+        <div class="sp-content">
+            <div class="sp-section">
+                <h2>企業合規需求試算器</h2>
+                <p>根據《職業安全衛生法》與《勞工健康保護規則》，快速了解法規要求與預估成本</p>
+                
+                <div class="sp-calculator">
+                    <div class="sp-input-section">
+                        <h3>輸入企業資訊</h3>
+                        
+                        <div class="sp-input-group">
+                            <label for="sp-employees">員工人數</label>
+                            <input type="number" id="sp-employees" placeholder="請輸入員工人數">
+                        </div>
+                        
+                        <div class="sp-input-group">
+                            <label for="sp-industry">事業分級</label>
+                            <select id="sp-industry">
+                                <option value="">選擇事業分級</option>
+                                <option value="class1">第一類（高風險事業）</option>
+                                <option value="class2">第二類（中風險事業）</option>
+                                <option value="class3">第三類（低風險事業）</option>
+                            </select>
+                        </div>
+                        
+                        <div class="sp-checkbox-group">
+                            <input type="checkbox" id="sp-hazards">
+                            <label for="sp-hazards">有特別危害健康作業（噪音、化學物質、輻射等）</label>
+                        </div>
+                        
+                        <button class="sp-btn" onclick="calculateSPCompliance()">計算合規需求</button>
+                    </div>
+                    
+                    <div class="sp-results-section">
+                        <h3>合規需求結果</h3>
+                        <div id="sp-results" class="sp-results">
+                            <p>請輸入企業資訊以查看合規需求</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="sp-alert">
+                <div class="sp-alert-title">重要提醒</div>
+                <div class="sp-alert-content">此工具僅供參考，實際合規要求請以最新法規公告為準。建議諮詢專業顧問確認具體實施方案。</div>
+            </div>
+            
+            <div class="sp-section">
+                <h2>重要法規要點</h2>
+                <div class="sp-info-cards">
+                    <div class="sp-info-card">
+                        <h3>50-299人事業單位</h3>
+                        <p>需特約醫師提供臨場健康服務，護理人員可特約，毋須僱用。依事業分級決定服務頻率。</p>
+                    </div>
+                    <div class="sp-info-card">
+                        <h3>300人以上事業單位</h3>
+                        <p>需僱用護理人員，醫師可僱用或特約。每300人需配置1名護理人員。</p>
+                    </div>
+                    <div class="sp-info-card">
+                        <h3>特別危害健康作業</h3>
+                        <p>50人以上需僱用護理人員，不論總員工數。需職業醫學科專科醫師提供服務。</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function calculateSPCompliance() {
+            const employees = parseInt(document.getElementById('sp-employees').value) || 0;
+            const industry = document.getElementById('sp-industry').value;
+            const hasHazards = document.getElementById('sp-hazards').checked;
+            const resultsDiv = document.getElementById('sp-results');
+            
+            if (employees === 0 || !industry) {
+                resultsDiv.innerHTML = '<p style="color: #a4262c;">請完整填寫員工人數和事業分級</p>';
+                return;
+            }
+            
+            let results = [];
+            let cost = { min: 0, max: 0 };
+            
+            // 護理人員需求
+            let nurseCount = 0;
+            if (employees >= 300) {
+                nurseCount = Math.ceil((employees - 300) / 300) + 1;
+            }
+            if (hasHazards && employees >= 50) {
+                nurseCount = Math.max(nurseCount, 1);
+            }
+            
+            results.push({
+                title: '專職護理人員',
+                desc: nurseCount > 0 ? `需配置 ${nurseCount} 名專職護理人員` : '不需專職設置'
+            });
+            
+            // 臨場健康服務
+            if (employees >= 50) {
+                let frequency = '';
+                if (industry === 'class1') frequency = '每月至少1次（第一類事業）';
+                else if (industry === 'class2') frequency = '每2個月至少1次（第二類事業）';
+                else frequency = '每3個月至少1次（第三類事業）';
+                
+                results.push({
+                    title: '臨場健康服務',
+                    desc: frequency
+                });
+            }
+            
+            // 職業安全衛生人員
+            let safetyPersonnel = '';
+            if (employees < 30) {
+                safetyPersonnel = '可由雇主或代理人擔任';
+            } else if (employees < 100) {
+                safetyPersonnel = '乙種職業安全衛生業務主管1人';
+            } else if (employees < 300) {
+                safetyPersonnel = '甲種職業安全衛生業務主管1人';
+            } else {
+                safetyPersonnel = '甲種職業安全衛生業務主管1人 + 職業安全衛生管理員';
+            }
+            
+            results.push({
+                title: '職業安全衛生人員',
+                desc: safetyPersonnel
+            });
+            
+            // 成本估算
+            if (employees >= 50 && employees < 300) {
+                cost = { min: 8000, max: 25000 };
+            } else if (employees >= 300 && employees < 500) {
+                cost = { min: 45000, max: 75000 };
+            } else if (employees >= 500 && employees < 1000) {
+                cost = { min: 70000, max: 120000 };
+            } else if (employees >= 1000) {
+                cost = { min: 100000, max: 200000 };
+            }
+            
+            // 高風險行業調整
+            if (industry === 'class1') {
+                cost.min = Math.round(cost.min * 1.5);
+                cost.max = Math.round(cost.max * 1.5);
+            } else if (industry === 'class2') {
+                cost.min = Math.round(cost.min * 1.2);
+                cost.max = Math.round(cost.max * 1.2);
+            }
+            
+            if (hasHazards && employees >= 50) {
+                cost.min += 20000;
+                cost.max += 50000;
+            }
+            
+            // 顯示結果
+            let html = `<div class="sp-result-item">
+                <div class="sp-result-title">${employees} 名員工</div>
+                <div class="sp-result-desc">${getSPIndustryName(industry)}</div>
+            </div>`;
+            
+            results.forEach(result => {
+                html += `<div class="sp-result-item">
+                    <div class="sp-result-title">${result.title}</div>
+                    <div class="sp-result-desc">${result.desc}</div>
+                </div>`;
+            });
+            
+            if (cost.min > 0) {
+                html += `<div class="sp-cost-estimate">
+                    <div class="sp-cost-amount">NT$ ${cost.min.toLocaleString()} - ${cost.max.toLocaleString()}</div>
+                    <div class="sp-disclaimer">預估每月成本範圍<br>*實際費用依服務內容而異</div>
+                </div>`;
+            }
+            
+            resultsDiv.innerHTML = html;
+        }
+        
+        function getSPIndustryName(industry) {
+            const names = {
+                'class1': '第一類（高風險事業）',
+                'class2': '第二類（中風險事業）',
+                'class3': '第三類（低風險事業）'
+            };
+            return names[industry] || '';
+        }
+    </script>
+</body>
+</html>

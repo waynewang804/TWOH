@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>台灣職場健康管理工具</title>
+    <style>
+        /* 針對 iframe 優化的樣式 */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #f3f2f1;
+            color: #323130;
+            min-height: 100vh;
+            padding: 10px;
+        }
+        
+        .iframe-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+        
+        .iframe-header {
+            background: linear-gradient(135deg, #0078d4 0%, #106ebe 100%);
+            color: white;
+            padding: 20px;
+            text-align: center;
+        }
+        
+        .iframe-header h1 {
+            font-size: 1.8rem;
+            margin-bottom: 8px;
+        }
+        
+        .iframe-header p {
+            font-size: 1rem;
+            opacity: 0.9;
+        }
+        
+        .iframe-content {
+            padding: 20px;
+        }
+        
+        .iframe-calculator {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-top: 15px;
+        }
+        
+        @media (max-width: 768px) {
+            .iframe-calculator {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        .iframe-input-section,
+        .iframe-results-section {
+            background: #faf9f8;
+            padding: 20px;
+            border-radius: 6px;
+            border: 1px solid #edebe9;
+        }
+        
+        .iframe-input-group {
+            margin-bottom: 15px;
+        }
+        
+        .iframe-input-group label {
+            display: block;
+            margin-bottom: 6px;
+            font-weight: 600;
+            color: #323130;
+            font-size: 14px;
+        }
+        
+        .iframe-input-group input,
+        .iframe-input-group select {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #8a8886;
+            border-radius: 4px;
+            font-size: 14px;
+            font-family: 'Segoe UI', sans-serif;
+        }
+        
+        .iframe-input-group input:focus,
+        .iframe-input-group select:focus {
+            outline: none;
+            border-color: #0078d4;
+            box-shadow: 0 0 0 1px #0078d4;
+        }
+        
+        .iframe-checkbox-group {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 12px;
+            background: white;
+            border: 1px solid #edebe9;
+            border-radius: 4px;
+            margin-bottom: 15px;
+        }
+        
+        .iframe-checkbox-group input[type="checkbox"] {
+            width: auto;
+            margin: 0;
+        }
+        
+        .iframe-checkbox-group label {
+            font-size: 13px;
+            margin: 0;
+        }
+        
+        .iframe-btn {
+            background: #0078d4;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 4px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.3s;
+            font-family: 'Segoe UI', sans-serif;
+        }
+        
+        .iframe-btn:hover {
+            background: #106ebe;
+        }
+        
+        .iframe-results {
+            background: white;
+            border: 1px solid #edebe9;
+            border-radius: 4px;
+            padding: 15px;
+            min-height: 200px;
+        }
+        
+        .iframe-result-item {
+            margin-bottom: 12px;
+            padding: 12px;
+            background: #f3f2f1;
+            border-radius: 4px;
+            border-left: 3px solid #0078d4;
+        }
+        
+        .iframe-result-title {
+            font-weight: 600;
+            color: #323130;
+            margin-bottom: 4px;
+            font-size: 14px;
+        }
+        
+        .iframe-result-desc {
+            color: #605e5c;
+            font-size: 13px;
+        }
+        
+        .iframe-cost-estimate {
+            background: linear-gradient(135deg, #0078d4 0%, #106ebe 100%);
+            color: white;
+            padding: 15px;
+            border-radius: 4px;
+            text-align: center;
+            margin-top: 15px;
+        }
+        
+        .iframe-cost-amount {
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin-bottom: 6px;
+        }
+        
+        .iframe-disclaimer {
+            font-size: 11px;
+            opacity: 0.9;
+        }
+        
+        .iframe-info-section {
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 1px solid #edebe9;
+        }
+        
+        .iframe-info-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 15px;
+            margin-top: 15px;
+        }
+        
+        .iframe-info-card {
+            background: white;
+            border: 1px solid #edebe9;
+            border-radius: 4px;
+            padding: 15px;
+        }
+        
+        .iframe-info-card h4 {
+            color: #0078d4;
+            margin: 0 0 8px 0;
+            font-size: 14px;
+        }
+        
+        .iframe-info-card p {
+            color: #605e5c;
+            font-size: 12px;
+            line-height: 1.4;
+            margin: 0;
+        }
+        
+        .iframe-alert {
+            background: #fff4ce;
+            border: 1px solid #ffb900;
+            border-radius: 4px;
+            padding: 12px;
+            margin: 15px 0;
+        }
+        
+        .iframe-alert-title {
+            font-weight: 600;
+            color: #8a8886;
+            margin-bottom: 4px;
+            font-size: 13px;
+        }
+        
+        .iframe-alert-content {
+            color: #605e5c;
+            font-size: 12px;
+        }
+    </style>
+</head>
+<body>
+    <div class="iframe-container">
+        <div class="iframe-header">
+            <h1>台灣職場健康管理工具</h1>
+            <p>Amazon Taiwan 內部工具 - 企業合規需求試算器</p>
+        </div>
+        
+        <div class="iframe-content">
+            <h2 style="color: #0078d4; font-size: 1.3rem; margin-bottom: 10px;">企業合規需求試算器</h2>
+            <p style="color: #605e5c; font-size: 13px; margin-bottom: 15px;">根據《職業安全衛生法》與《勞工健康保護規則》，快速了解法規要求與預估成本</p>
+            
+            <div class="iframe-calculator">
+                <div class="iframe-input-section">
+                    <h3 style="margin: 0 0 15px 0; font-size: 1.1rem;">輸入企業資訊</h3>
+                    
+                    <div class="iframe-input-group">
+                        <label for="iframe-employees">員工人數</label>
+                        <input type="number" id="iframe-employees" placeholder="請輸入員工人數">
+                    </div>
+                    
+                    <div class="iframe-input-group">
+                        <label for="iframe-industry">事業分級</label>
+                        <select id="iframe-industry">
+                            <option value="">選擇事業分級</option>
+                            <option value="class1">第一類（高風險事業）</option>
+                            <option value="class2">第二類（中風險事業）</option>
+                            <option value="class3">第三類（低風險事業）</option>
+                        </select>
+                    </div>
+                    
+                    <div class="iframe-checkbox-group">
+                        <input type="checkbox" id="iframe-hazards">
+                        <label for="iframe-hazards">有特別危害健康作業（噪音、化學物質、輻射等）</label>
+                    </div>
+                    
+                    <button class="iframe-btn" onclick="calculateIframeCompliance()">計算合規需求</button>
+                </div>
+                
+                <div class="iframe-results-section">
+                    <h3 style="margin: 0 0 15px 0; font-size: 1.1rem;">合規需求結果</h3>
+                    <div id="iframe-results" class="iframe-results">
+                        <p style="color: #605e5c; font-size: 13px;">請輸入企業資訊以查看合規需求</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="iframe-alert">
+                <div class="iframe-alert-title">重要提醒</div>
+                <div class="iframe-alert-content">此工具僅供參考，實際合規要求請以最新法規公告為準。建議諮詢專業顧問確認具體實施方案。</div>
+            </div>
+            
+            <div class="iframe-info-section">
+                <h3 style="color: #0078d4; font-size: 1.2rem; margin-bottom: 10px;">重要法規要點</h3>
+                <div class="iframe-info-cards">
+                    <div class="iframe-info-card">
+                        <h4>50-299人事業單位</h4>
+                        <p>需特約醫師提供臨場健康服務，護理人員可特約，毋須僱用。依事業分級決定服務頻率。</p>
+                    </div>
+                    <div class="iframe-info-card">
+                        <h4>300人以上事業單位</h4>
+                        <p>需僱用護理人員，醫師可僱用或特約。每300人需配置1名護理人員。</p>
+                    </div>
+                    <div class="iframe-info-card">
+                        <h4>特別危害健康作業</h4>
+                        <p>50人以上需僱用護理人員，不論總員工數。需職業醫學科專科醫師提供服務。</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function calculateIframeCompliance() {
+            const employees = parseInt(document.getElementById('iframe-employees').value) || 0;
+            const industry = document.getElementById('iframe-industry').value;
+            const hasHazards = document.getElementById('iframe-hazards').checked;
+            const resultsDiv = document.getElementById('iframe-results');
+            
+            if (employees === 0 || !industry) {
+                resultsDiv.innerHTML = '<p style="color: #a4262c; font-size: 13px;">請完整填寫員工人數和事業分級</p>';
+                return;
+            }
+            
+            let results = [];
+            let cost = { min: 0, max: 0 };
+            
+            // 護理人員需求
+            let nurseCount = 0;
+            if (employees >= 300) {
+                nurseCount = Math.ceil((employees - 300) / 300) + 1;
+            }
+            if (hasHazards && employees >= 50) {
+                nurseCount = Math.max(nurseCount, 1);
+            }
+            
+            results.push({
+                title: '專職護理人員',
+                desc: nurseCount > 0 ? `需配置 ${nurseCount} 名專職護理人員` : '不需專職設置'
+            });
+            
+            // 臨場健康服務
+            if (employees >= 50) {
+                let frequency = '';
+                if (industry === 'class1') frequency = '每月至少1次（第一類事業）';
+                else if (industry === 'class2') frequency = '每2個月至少1次（第二類事業）';
+                else frequency = '每3個月至少1次（第三類事業）';
+                
+                results.push({
+                    title: '臨場健康服務',
+                    desc: frequency
+                });
+            }
+            
+            // 職業安全衛生人員
+            let safetyPersonnel = '';
+            if (employees < 30) {
+                safetyPersonnel = '可由雇主或代理人擔任';
+            } else if (employees < 100) {
+                safetyPersonnel = '乙種職業安全衛生業務主管1人';
+            } else if (employees < 300) {
+                safetyPersonnel = '甲種職業安全衛生業務主管1人';
+            } else {
+                safetyPersonnel = '甲種職業安全衛生業務主管1人 + 職業安全衛生管理員';
+            }
+            
+            results.push({
+                title: '職業安全衛生人員',
+                desc: safetyPersonnel
+            });
+            
+            // 成本估算
+            if (employees >= 50 && employees < 300) {
+                cost = { min: 8000, max: 25000 };
+            } else if (employees >= 300 && employees < 500) {
+                cost = { min: 45000, max: 75000 };
+            } else if (employees >= 500 && employees < 1000) {
+                cost = { min: 70000, max: 120000 };
+            } else if (employees >= 1000) {
+                cost = { min: 100000, max: 200000 };
+            }
+            
+            // 高風險行業調整
+            if (industry === 'class1') {
+                cost.min = Math.round(cost.min * 1.5);
+                cost.max = Math.round(cost.max * 1.5);
+            } else if (industry === 'class2') {
+                cost.min = Math.round(cost.min * 1.2);
+                cost.max = Math.round(cost.max * 1.2);
+            }
+            
+            if (hasHazards && employees >= 50) {
+                cost.min += 20000;
+                cost.max += 50000;
+            }
+            
+            // 顯示結果
+            let html = `<div class="iframe-result-item">
+                <div class="iframe-result-title">${employees} 名員工</div>
+                <div class="iframe-result-desc">${getIframeIndustryName(industry)}</div>
+            </div>`;
+            
+            results.forEach(result => {
+                html += `<div class="iframe-result-item">
+                    <div class="iframe-result-title">${result.title}</div>
+                    <div class="iframe-result-desc">${result.desc}</div>
+                </div>`;
+            });
+            
+            if (cost.min > 0) {
+                html += `<div class="iframe-cost-estimate">
+                    <div class="iframe-cost-amount">NT$ ${cost.min.toLocaleString()} - ${cost.max.toLocaleString()}</div>
+                    <div class="iframe-disclaimer">預估每月成本範圍<br>*實際費用依服務內容而異</div>
+                </div>`;
+            }
+            
+            resultsDiv.innerHTML = html;
+        }
+        
+        function getIframeIndustryName(industry) {
+            const names = {
+                'class1': '第一類（高風險事業）',
+                'class2': '第二類（中風險事業）',
+                'class3': '第三類（低風險事業）'
+            };
+            return names[industry] || '';
+        }
+    </script>
+</body>
+</html>

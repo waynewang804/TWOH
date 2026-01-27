@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>台灣職場健康管理 | Amazon Internal Tool</title>
+    <style>
+        /* 內嵌所有 CSS 樣式，避免外部依賴 */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: #f8f9fa;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #ff9500 0%, #ff6b35 100%);
+            color: white;
+            padding: 40px 20px;
+            text-align: center;
+            border-radius: 12px;
+            margin-bottom: 30px;
+        }
+        
+        .header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
+        
+        .header p {
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+        
+        .card {
+            background: white;
+            border-radius: 12px;
+            padding: 30px;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        
+        .calculator {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin-top: 30px;
+        }
+        
+        @media (max-width: 768px) {
+            .calculator {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        .input-group {
+            margin-bottom: 20px;
+        }
+        
+        .input-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #333;
+        }
+        
+        .input-group input,
+        .input-group select {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #e1e5e9;
+            border-radius: 8px;
+            font-size: 16px;
+            transition: border-color 0.3s;
+        }
+        
+        .input-group input:focus,
+        .input-group select:focus {
+            outline: none;
+            border-color: #ff9500;
+        }
+        
+        .checkbox-group {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 15px;
+            background: #f8f9fa;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+        
+        .btn {
+            background: #ff9500;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 8px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+        
+        .btn:hover {
+            background: #e6850e;
+        }
+        
+        .results {
+            background: #f8f9fa;
+            border-left: 4px solid #ff9500;
+            padding: 20px;
+            border-radius: 8px;
+        }
+        
+        .result-item {
+            margin-bottom: 15px;
+            padding: 15px;
+            background: white;
+            border-radius: 8px;
+            border: 1px solid #e1e5e9;
+        }
+        
+        .result-title {
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 5px;
+        }
+        
+        .result-desc {
+            color: #666;
+        }
+        
+        .cost-estimate {
+            background: linear-gradient(135deg, #ff9500 0%, #ff6b35 100%);
+            color: white;
+            padding: 20px;
+            border-radius: 8px;
+            text-align: center;
+            margin-top: 20px;
+        }
+        
+        .cost-amount {
+            font-size: 1.8rem;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+        
+        .disclaimer {
+            font-size: 0.9rem;
+            opacity: 0.9;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>台灣職場健康管理</h1>
+            <p>Amazon Taiwan 內部工具 - 企業合規需求試算器</p>
+        </div>
+        
+        <div class="card">
+            <h2>企業合規需求試算器</h2>
+            <p>根據《職業安全衛生法》與《勞工健康保護規則》，快速了解法規要求與預估成本</p>
+            
+            <div class="calculator">
+                <div class="input-section">
+                    <h3>輸入企業資訊</h3>
+                    
+                    <div class="input-group">
+                        <label for="employees">員工人數</label>
+                        <input type="number" id="employees" placeholder="請輸入員工人數">
+                    </div>
+                    
+                    <div class="input-group">
+                        <label for="industry">事業分級</label>
+                        <select id="industry">
+                            <option value="">選擇事業分級</option>
+                            <option value="class1">第一類（高風險事業）</option>
+                            <option value="class2">第二類（中風險事業）</option>
+                            <option value="class3">第三類（低風險事業）</option>
+                        </select>
+                    </div>
+                    
+                    <div class="checkbox-group">
+                        <input type="checkbox" id="hazards">
+                        <label for="hazards">有特別危害健康作業（噪音、化學物質、輻射等）</label>
+                    </div>
+                    
+                    <button class="btn" onclick="calculateCompliance()">計算合規需求</button>
+                </div>
+                
+                <div class="results-section">
+                    <h3>合規需求結果</h3>
+                    <div id="results" class="results">
+                        <p>請輸入企業資訊以查看合規需求</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="card">
+            <h2>重要法規要點</h2>
+            <div class="result-item">
+                <div class="result-title">50-299人事業單位</div>
+                <div class="result-desc">需特約醫師提供臨場健康服務，護理人員可特約</div>
+            </div>
+            <div class="result-item">
+                <div class="result-title">300人以上事業單位</div>
+                <div class="result-desc">需僱用護理人員，醫師可僱用或特約</div>
+            </div>
+            <div class="result-item">
+                <div class="result-title">特別危害健康作業</div>
+                <div class="result-desc">50人以上需僱用護理人員，不論總員工數</div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function calculateCompliance() {
+            const employees = parseInt(document.getElementById('employees').value) || 0;
+            const industry = document.getElementById('industry').value;
+            const hasHazards = document.getElementById('hazards').checked;
+            const resultsDiv = document.getElementById('results');
+            
+            if (employees === 0 || !industry) {
+                resultsDiv.innerHTML = '<p>請完整填寫員工人數和事業分級</p>';
+                return;
+            }
+            
+            let results = [];
+            let cost = { min: 0, max: 0 };
+            
+            // 護理人員需求
+            let nurseCount = 0;
+            if (employees >= 300) {
+                nurseCount = Math.ceil((employees - 300) / 300) + 1;
+            }
+            if (hasHazards && employees >= 50) {
+                nurseCount = Math.max(nurseCount, 1);
+            }
+            
+            results.push({
+                title: '專職護理人員',
+                desc: nurseCount > 0 ? `需配置 ${nurseCount} 名專職護理人員` : '不需專職設置'
+            });
+            
+            // 臨場健康服務
+            if (employees >= 50) {
+                let frequency = '';
+                if (industry === 'class1') frequency = '每月至少1次';
+                else if (industry === 'class2') frequency = '每2個月至少1次';
+                else frequency = '每3個月至少1次';
+                
+                results.push({
+                    title: '臨場健康服務',
+                    desc: frequency
+                });
+            }
+            
+            // 成本估算
+            if (employees >= 50 && employees < 300) {
+                cost = { min: 8000, max: 25000 };
+            } else if (employees >= 300 && employees < 500) {
+                cost = { min: 45000, max: 75000 };
+            } else if (employees >= 500 && employees < 1000) {
+                cost = { min: 70000, max: 120000 };
+            } else if (employees >= 1000) {
+                cost = { min: 100000, max: 200000 };
+            }
+            
+            if (hasHazards && employees >= 50) {
+                cost.min += 20000;
+                cost.max += 50000;
+            }
+            
+            // 顯示結果
+            let html = `<div class="result-item"><div class="result-title">${employees} 名員工</div><div class="result-desc">${getIndustryName(industry)}</div></div>`;
+            
+            results.forEach(result => {
+                html += `<div class="result-item"><div class="result-title">${result.title}</div><div class="result-desc">${result.desc}</div></div>`;
+            });
+            
+            if (cost.min > 0) {
+                html += `<div class="cost-estimate">
+                    <div class="cost-amount">NT$ ${cost.min.toLocaleString()} - ${cost.max.toLocaleString()}</div>
+                    <div class="disclaimer">預估每月成本範圍 *實際費用依服務內容而異</div>
+                </div>`;
+            }
+            
+            resultsDiv.innerHTML = html;
+        }
+        
+        function getIndustryName(industry) {
+            const names = {
+                'class1': '第一類（高風險事業）',
+                'class2': '第二類（中風險事業）',
+                'class3': '第三類（低風險事業）'
+            };
+            return names[industry] || '';
+        }
+    </script>
+</body>
+</html>
