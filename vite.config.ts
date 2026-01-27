@@ -16,4 +16,14 @@ export default defineConfig(({ mode }) => ({
       "@": path.resolve(__dirname, "./src"),
     },
   },
+  build: {
+    rollupOptions: {
+      output: {
+        manualChunks: {
+          vendor: ['react', 'react-dom'],
+          ui: ['@radix-ui/react-select', '@radix-ui/react-checkbox', '@radix-ui/react-label']
+        }
+      }
+    }
+  }
 }));
