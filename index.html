@@ -21,6 +21,19 @@
       "description": "根據職業安全衛生法與勞工健康保護規則，協助企業了解職業健康法規要求"
     }
     </script>
+    <!-- GitHub Pages SPA redirect restore -->
+    <script>
+      (function(l) {
+        if (l.search[1] === '/') {
+          var decoded = l.search.slice(1).split('&').map(function(s) {
+            return s.replace(/~and~/g, '&')
+          }).join('?');
+          window.history.replaceState(null, null,
+            l.pathname.slice(0, -1) + decoded + l.hash
+          );
+        }
+      }(window.location))
+    </script>
   </head>
   <body>
     <div id="root"></div>
