@@ -75,7 +75,7 @@ const RequirementsSection = () => {
     {
       key: "healthPromotion",
       icon: Shield,
-      progress: 75
+      progress: 95
     }
   ];
 

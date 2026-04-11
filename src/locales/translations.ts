@@ -191,11 +191,11 @@ export const translations = {
         },
         healthMgmt: {
           title: "健康管理", 
-          desc: "依照年度健康檢查結果四級分級管理、異常個案追蹤輔導、工作適性評估、復工適性評估\n "
+          desc: "依照年度健康檢查結果四級分級管理、異常個案追蹤輔導、工作適性評估、復工適性評估、人因性危害預防、異常工作負荷促發疾病預防\n "
         },
         healthPromotion: {
           title: "健康促進",
-          desc: "職場健康促進活動、人因性危害預防、異常工作負荷促發疾病預防、職場暴力預防"
+          desc: "職場健康促進活動、職場暴力預防"
         }
       },
       specialHazard: {
@@ -1170,11 +1170,11 @@ export const translations = {
         },
         healthMgmt: {
           title: "健康管理", 
-          desc: "健检结果四级分级管理、异常个案追踪辅导、工作适性评估、复工适性评估"
+          desc: "健检结果四级分级管理、异常个案追踪辅导、工作适性评估、复工适性评估、人因性危害预防、异常工作负荷促发疾病预防"
         },
         healthPromotion: {
           title: "健康促进",
-          desc: "职场健康促进活动、人因性危害预防、异常工作负荷促发疾病预防、职场暴力预防"
+          desc: "职场健康促进活动、职场暴力预防"
         }
       },
       specialHazard: {
@@ -1938,11 +1938,11 @@ export const translations = {
         },
         healthMgmt: {
           title: "Health Management", 
-          desc: "Four-tier graded management of health exam results, abnormal case follow-up, work suitability assessment, return-to-work assessment"
+          desc: "Four-tier graded management of health exam results, abnormal case follow-up, work suitability assessment, return-to-work assessment, ergonomic hazard prevention, abnormal workload disease prevention"
         },
         healthPromotion: {
           title: "Health Promotion",
-          desc: "Workplace health promotion activities, ergonomic hazard prevention, abnormal workload disease prevention, workplace violence prevention"
+          desc: "Workplace health promotion activities, workplace violence prevention"
         }
       },
       specialHazard: {
@@ -2706,11 +2706,11 @@ export const translations = {
         },
         healthMgmt: {
           title: "건강 관리", 
-          desc: "건강검진 결과 4단계 등급별 관리, 이상 사례 추적 지도, 업무 적합성 평가, 복직 적합성 평가"
+          desc: "건강검진 결과 4단계 등급별 관리, 이상 사례 추적 지도, 업무 적합성 평가, 복직 적합성 평가, 인간공학적 위험 예방, 비정상적 업무 부하로 인한 질병 예방"
         },
         healthPromotion: {
           title: "건강 증진",
-          desc: "직장 건강 증진 활동, 인간공학적 위험 예방, 비정상적 업무 부하로 인한 질병 예방, 직장 폭력 예방"
+          desc: "직장 건강 증진 활동, 직장 폭력 예방"
         }
       },
       specialHazard: {
