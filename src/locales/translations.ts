@@ -940,7 +940,9 @@ export const translations = {
         freeSubsidy: "免費（勞保補助）",
         qualificationRequired: "需符合資格申請",
         perTime: "次",
-        perPerson: "人"
+        perPerson: "人",
+        sourceLabel: "參考來源：",
+        sources: "勞動部職業安全衛生署公告費用標準、各醫療機構及職業健康服務機構公開報價、104人力銀行薪資統計"
       },
       resources: {
         osha: "勞動部職業安全衛生署",
@@ -1708,7 +1710,9 @@ export const translations = {
         freeSubsidy: "免费（劳保补助）",
         qualificationRequired: "需符合资格申请",
         perTime: "次",
-        perPerson: "人"
+        perPerson: "人",
+        sourceLabel: "参考来源：",
+        sources: "劳动部职业安全卫生署公告费用标准、各医疗机构及职业健康服务机构公开报价、104人力银行薪资统计"
       },
       resources: {
         osha: "劳动部职业安全卫生署",
@@ -2476,7 +2480,9 @@ export const translations = {
         freeSubsidy: "Free (Labor Insurance Subsidy)",
         qualificationRequired: "Must meet qualification requirements",
         perTime: "per visit",
-        perPerson: "per person"
+        perPerson: "per person",
+        sourceLabel: "Sources: ",
+        sources: "Ministry of Labor OSHA published fee standards, public pricing from medical and occupational health service institutions, 104 Job Bank salary statistics"
       },
       resources: {
         osha: "Ministry of Labor OSHA",
@@ -3244,7 +3250,9 @@ export const translations = {
         freeSubsidy: "무료(근로자보험 보조금)",
         qualificationRequired: "자격 요건 충족 필요",
         perTime: "회",
-        perPerson: "명"
+        perPerson: "명",
+        sourceLabel: "참고 출처: ",
+        sources: "노동부 직업안전보건청 공시 비용 기준, 각 의료기관 및 직업건강서비스 기관 공개 가격, 104 잡뱅크 급여 통계"
       },
       resources: {
         osha: "노동부 직업안전보건청",

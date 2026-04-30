@@ -280,6 +280,46 @@ const BusinessClassification = () => {
           </div>
         </div>
 
+        {/* Industry Classification Tool - Moved to top */}
+        <div className="business-card mb-20 animate-fade-in" style={{ animationDelay: '0.2s' }}>
+          <div className="p-8 border-b border-gray-200">
+            <div className="flex items-center justify-between">
+              <div>
+                <h3 className="text-3xl font-bold text-gray-900 mb-4 flex items-center gap-3">
+                  <Search className="w-8 h-8 text-amazon-orange" />
+                  {t("businessClass.classificationTool.title")}
+                </h3>
+                <p className="business-body text-gray-600">{t("businessClass.classificationTool.subtitle")}</p>
+              </div>
+              <Button 
+                onClick={() => setShowClassificationTool(true)}
+                className="business-button-primary"
+              >
+                <Search className="w-5 h-5 mr-2" />
+                {t("businessClass.classificationTool.startClassification")}
+              </Button>
+            </div>
+          </div>
+        </div>
+
+        {/* Enterprise Compliance Requirements Calculator - Moved to top */}
+        <div id="calculator" className="business-card mb-20 animate-fade-in" style={{ animationDelay: '0.3s' }}>
+          <div className="p-8 border-b border-gray-200">
+            <div className="flex items-center justify-between">
+              <div>
+                <h3 className="text-3xl font-bold text-gray-900 mb-4 flex items-center gap-3">
+                  <Calculator className="w-8 h-8 text-amazon-orange" />
+                  {t("businessClass.classificationTool.complianceCalculator.title")}
+                </h3>
+                <p className="business-body text-gray-600">{t("calculator.description")}</p>
+              </div>
+            </div>
+          </div>
+          <div className="p-8">
+            <ComplianceCalculatorIntegrated />
+          </div>
+        </div>
+
         {/* Enhanced Classification Cards */}
         <div className="grid md:grid-cols-3 gap-10 mb-24 hover-sync-container" onMouseEnter={triggerAllAnimations}>
           {classificationData.map((item, index) => (
@@ -453,87 +493,7 @@ const BusinessClassification = () => {
           </div>
         </div>
 
-        {/* Enhanced Important Reminders */}
-        <div className="business-highlight-box animate-fade-in hover-sync-container" style={{ animationDelay: '0.7s' }} onMouseEnter={triggerAllAnimations}>
-          <div className="flex items-center gap-6 mb-8">
-            <div className="business-icon-wrapper bg-amazon-navy shadow-lg">
-              <Award className="w-8 h-8 text-white" />
-            </div>
-            <div className="flex-1">
-              <h3 className="text-3xl font-bold text-gray-900 mb-2">
-                {t("businessClass.reminder.title")}
-              </h3>
-              <div className="flex items-center gap-4">
-                <div className="business-metric text-amazon-navy text-2xl">
-                  <AnimatedCounter 
-                    ref={(el) => { counterRefs.current[18] = el; }}
-                    value={4} 
-                    duration={800}
-                    startDelay={300}
-                    triggerOnHover={false}
-                    triggerOnView={true}
-                  />
-                </div>
-                <div className="business-metric-label">{t("businessClass.labels.importantReminders")}</div>
-              </div>
-            </div>
-          </div>
-          
-          <div className="business-timeline">
-            {t("businessClass.reminder.points").map((point: string, index: number) => (
-              <div key={index} className="business-timeline-item">
-                <div className="business-timeline-dot bg-amazon-navy"></div>
-                <div className="business-data-point bg-white border-amazon-navy">
-                  <div className="flex items-start gap-4">
-                    <div className="business-number bg-amazon-navy text-sm">
-                      {index + 1}
-                    </div>
-                    <div className="flex-1">
-                      <p className="business-body text-gray-700">{point}</p>
-                      <div className="mt-3 flex items-center gap-2">
-                        <AnimatedProgressBar 
-                          ref={(el) => { progressBarRefs.current[6 + index] = el; }}
-                          progress={100 - index * 15}
-                          duration={1000}
-                          startDelay={index * 200 + 600}
-                          className="flex-1"
-                          barClassName="bg-amazon-navy"
-                          triggerOnHover={false}
-                          triggerOnView={true}
-                        />
-                        <span className="text-sm font-medium text-gray-600">{t("businessClass.labels.riskLevel")}</span>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-
-        {/* Industry Classification Tool */}
-        <div className="business-card mb-20 animate-fade-in" style={{ animationDelay: '0.8s' }}>
-          <div className="p-8 border-b border-gray-200">
-            <div className="flex items-center justify-between">
-              <div>
-                <h3 className="text-3xl font-bold text-gray-900 mb-4 flex items-center gap-3">
-                  <Search className="w-8 h-8 text-amazon-orange" />
-                  {t("businessClass.classificationTool.title")}
-                </h3>
-                <p className="business-body text-gray-600">{t("businessClass.classificationTool.subtitle")}</p>
-              </div>
-              <Button 
-                onClick={() => setShowClassificationTool(true)}
-                className="business-button-primary"
-              >
-                <Search className="w-5 h-5 mr-2" />
-                {t("businessClass.classificationTool.startClassification")}
-              </Button>
-            </div>
-          </div>
-        </div>
-
-        {/* Classification Tool Modal */}
+        {/* Classification Tool Modal rendered here */}
         {showClassificationTool && (
           <div 
             className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4" 
@@ -792,24 +752,6 @@ const BusinessClassification = () => {
           </div>
         )}
 
-        {/* Enterprise Compliance Requirements Calculator */}
-        <div className="business-card mb-20 animate-fade-in" style={{ animationDelay: '0.9s' }}>
-          <div className="p-8 border-b border-gray-200">
-            <div className="flex items-center justify-between">
-              <div>
-                <h3 className="text-3xl font-bold text-gray-900 mb-4 flex items-center gap-3">
-                  <Calculator className="w-8 h-8 text-amazon-orange" />
-                  {t("businessClass.classificationTool.complianceCalculator.title")}
-                </h3>
-                <p className="business-body text-gray-600">{t("calculator.description")}</p>
-              </div>
-            </div>
-          </div>
-          
-          <div className="p-8">
-            <ComplianceCalculatorIntegrated />
-          </div>
-        </div>
       </div>
     </section>
   );
